@@ -1,0 +1,12 @@
+body {
+	font-size: 13px;
+}
+.table1 th {
+	text-align: left;
+}
+.table1 th:last-child {
+	text-align: right;
+}
+.table1 td:last-child {
+	text-align: right;
+}

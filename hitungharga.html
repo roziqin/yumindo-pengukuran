@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<div class="product-detail-holder">
+        <div class="container">
+            <form id="sendOrderHitung" action="">
+                <div class="accordion" style="height: 600px;overflow: auto;scrollbar-base-color:#ffeaff">
+                    <div class="accordion-group choose-collections">
+                        <div class="accordion-heading clearfix">
+                            <a id="step1-toggle" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1" href="#step1">
+                                <span class="step">1</span> <span>Produk Apa Yang Anda Butuhkan ?</span>
+                            </a>
+                        </div>
+                        <div id="step1" class="accordion-body gray in collapse" style="height: auto;">
+                            <div class="accordion-inner clearfix">
+                                <div class="row-fluid">
+                                    <div style="padding: 0px 10px;">
+                                        <label class="radio-inline"><input type="radio" name="kebutuhan" value="gorden" checked/> Gorden</label>
+				  						<label class="radio-inline"><input type="radio" name="kebutuhan" value="vitras"/> Vitras</label>
+				  						<label class="radio-inline"><input type="radio" name="kebutuhan" value="gordenvitras"/> Gorden & Vitras</label>
+				  						<label class="radio-inline"><input type="radio" name="kebutuhan" value="rollerblind"/> Roller Blind</label>
+				  						<label class="radio-inline"><input type="radio" name="kebutuhan" value="vertikalblind"/> Vertikal Blind</label>
+				  						<label class="radio-inline"><input type="radio" name="kebutuhan" value="horizontalblind"/> Horizontal Blind</label>
+                                        <label class="radio-inline"><input type="radio" name="kebutuhan" value="woddenblind"/> Wodden Blind</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group choose-collections" id="contmodel">
+                        <div class="accordion-heading clearfix">
+                            <a id="step1-toggle" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#step2">
+                                <span class="step">2</span> <span>Pilihan Model Yang Tersedia</span>
+                            </a>
+                        </div>
+                        <div id="step2" class="accordion-body gray in collapse" style="height: auto;">
+                            <div class="accordion-inner clearfix">
+                                <div class="row-fluid">
+                                    <div style="padding: 0px 10px;">
+                                        <label class="radio-inline" id="modelMinimalis"><input type="radio" name="model" value="minimalis" checked/> Minimalis/ Smoke Ring</label>
+				  						<label class="radio-inline" id="modelTriplet"><input type="radio" name="model" value="triplet"/> Triplet</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group choose-collections" id="contkain">
+                        <div class="accordion-heading clearfix">
+                            <a id="step1-toggle" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#step3">
+                                <span class="step">*</span> <span>Pilihan Bahan ?</span>
+                            </a>
+                        </div>
+                        <div id="step2" class="accordion-body gray in collapse" style="height: auto;">
+                            <div class="accordion-inner clearfix">
+                                <div class="row-fluid">
+                                    <div style="padding: 0px 10px;">
+                                        <label class="radio-inline kain"><input type="radio" name="kain" value="blackout" checked/> Kain Blackout</label>
+  										<label class="radio-inline kain"><input type="radio" name="kain" value="local"/> Kain Lokal</label>
+                                        <label class="radio-inline rollerblind"><input type="radio" name="kain" value="blackoutsuperior"/> Black Out Superior</label>
+                                        <label class="radio-inline rollerblind"><input type="radio" name="kain" value="superiordimout"/> Superior Dim Out</label>
+                                        <label class="radio-inline vertikalblind"><input type="radio" name="kain" value="blackout"/> Black Out</label>
+                                        <label class="radio-inline vertikalblind"><input type="radio" name="kain" value="dimout"/> Dim Out</label>
+                                        <label class="radio-inline horizontalblind"><input type="radio" name="kain" value="deluxeslatting"/> Deluxes Slatting</label>
+                                        <label class="radio-inline horizontalblind"><input type="radio" name="kain" value="perforatedslatting"/> Perforated Slatting</label>
+                                        <label class="radio-inline horizontalblind"><input type="radio" name="kain" value="woodmotiveslatting"/> Wood Motive Slatting</label>
+                                        <label class="radio-inline woddenblind"><input type="radio" name="kain" value="27mm"/> Wodden Blind 27mm</label>
+                                        <label class="radio-inline woddenblind"><input type="radio" name="kain" value="35mm"/> Wodden Blind 35mm</label>
+                                        <label class="radio-inline woddenblind"><input type="radio" name="kain" value="50mm"/> Wodden Blind 50mm</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group choose-collections">
+                        <div class="accordion-heading clearfix">
+                            <a id="step1-toggle" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#step4">
+                                <span class="step">*</span> <span>Dimensi (Tinggi x Lebar) ?</span>
+                            </a>
+                        </div>
+                        <div id="step2" class="accordion-body gray in collapse" style="height: auto;">
+                            <div class="accordion-inner clearfix">
+                                <div class="input-append" style="display: inline">
+								  <input type="number" name="tinggi" placeholder="tinggi" maxlength="5" style="width: 55px" value="100"/>
+								  <span class="add-on">cm</span>
+								</div>
+		  						<div class="input-append" style="display: inline">
+								  <input type="number" name="lebar" placeholder="lebar" maxlength="5" style="width: 55px" value="100"/>
+								  <span class="add-on">cm</span>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group choose-collections">
+                        <div class="accordion-heading clearfix">
+                             <a id="step1-toggle" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion4" href="#step4">
+                                <span class="step">*</span> <span>Estimasi Harga</span>
+                            </a>
+                        </div>
+                        <div id="step8" class="accordion-body gray in collapse" style="height: auto;">
+                            <div class="accordion-inner clearfix">
+                                <input type="text" name="total" id="hasilhitung" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-group choose-collections">
+                        <div class="accordion-heading clearfix">
+                            <p id="step1-toggle" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion8" style="text-align: center;font-size: 150%;font-weight: bold;padding: 0px;margin: 5px 0px">
+                                Kontak Anda
+                            </p>
+                            <div id="step8" class="accordion-body gray in collapse" style="height: auto;">
+                                <div class="accordion-inner clearfix">
+                                    <div class="row-fluid">
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputWarning" >Nama</label>
+                                            <div class="controls">
+                                                <input type="text" style="width: 100%" placeholder="Nama Lengkap" name="nama" required="">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputWarning">Email</label>
+                                            <div class="controls">
+                                                <input type="email" style="width: 100%" placeholder="Email" name="email" required="">
+                                            </div>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label" for="inputWarning">Telepon</label>
+                                            <div class="controls">
+                                                <input type="number" style="width: 100%" placeholder="Nomor Telepon" name="telepon" required="" maxlength="14">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="alert alert-success" role="alert" id="alertSend">Pemesanan & Perhitungan Harga Berhasil dikirim, CS Kami Akan Segera Menghubungi Anda</div>
+                                    <div style="float: right">
+                                        <button class="btn btn-orange" id="buttonSend" type="submit" style="color: #fff;font-size: 150%">Kirim Pemesanan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="http://www.yumindo.net/js/jquery-2.2.4.min.js" ></script>
+<script src="hitungharga.js"></script>
+</body>
+</html>
