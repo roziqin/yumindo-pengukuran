@@ -243,10 +243,16 @@ $data=mysql_fetch_array($query);
     	</div>
     	';
 	    }
+      if ($_GET['idukur']==0) {
+        $nameinput="inputpengukuran";
+      } else {
+        $nameinput="tambahpengukuran";
+      }
+      
 	    echo'
     	<input type="hidden" name="kualitas" class="form-control"  value="Premium">
 		<div class="col-md-2 col-md-offset-0 col-custom-left form-group">
-		    <input type="submit" class="btn btn-success pull-right btn-lg" value="Input" name="inputpengukuran" style="font-size: 14px; margin-top: 20px">
+		    <input type="submit" class="btn btn-success pull-right btn-lg" value="Input" name="'.$nameinput.'" style="font-size: 14px; margin-top: 20px">
 		</div>
     	';
       

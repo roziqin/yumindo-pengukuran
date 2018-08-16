@@ -157,6 +157,7 @@ if ($_GET['menu']=='home') {
 												$queryte=mysql_query($sqlte);
 												while ($data=mysql_fetch_array($queryte)) {
 
+
 								                	$sqlte1="SELECT name as nama_user from booking_pengukuran, users_lain where booking_pengukuran_user=id ";
 													$queryte1=mysql_query($sqlte1);
 													$data1=mysql_fetch_array($queryte1);
@@ -227,7 +228,7 @@ if ($_GET['menu']=='home') {
 									</div>
 								</div>
 							</div>
-		              		
+
 		              	<?php
 		              		# code...
 		              	}
@@ -590,26 +591,26 @@ if ($_GET['menu']=='home') {
 									</tr>
 
 									<tr>
-										<td></td>
+										<td></td>
 										<td></td>
 										<td>
 											<div class="form-group">
 												<?php
 												$persen='';
 												$tunai='';
-												if ($data['pengukuran_ket_diskon']=='Prosentase') {
+												if ($data['pengukuran_ket_diskon']=='Prosentase') {
 													# code...
 													$persen='selected';
-												} elseif ($data['pengukuran_ket_diskon']=='Tunai') {
+												} elseif ($data['pengukuran_ket_diskon']=='Tunai') {
 													# code...
 													$tunai='selected';
 												}
 												
 												?>
-												<select class="form-control" name="diskonket">
+												<select class="form-control" name="diskonket">
 													<option value="">-- Pilih Jenis Diskon --</option>
-													<option value="Prosentase" <?php echo $persen; ?> >Prosentase</option>
-													<option value="Tunai" <?php echo $tunai; ?> >Tunai</option>
+													<option value="Prosentase" <?php echo $persen; ?> >Prosentase</option>
+													<option value="Tunai" <?php echo $tunai; ?> >Tunai</option>
 												</select>
 											</div>
 										</td>
@@ -687,7 +688,7 @@ if ($_GET['menu']=='home') {
 												<td>PPN 10%</td>
 												<td>:</td>
 												<td>
-													<div class="checkbox">
+													<div class="checkbox">
 								                      <label>
 								                      	<?php
 
@@ -728,14 +729,23 @@ if ($_GET['menu']=='home') {
 									
 
 									
-								} else
-								if ($data["pengukuran_status"]=="Selesai Pemasangan") {
+								} elseif ($data["pengukuran_status"]=="Selesai Pemasangan" || $data["pengukuran_status"]=='Selesai Finishing') {
 
 								  $totalharga = $data['pengukuran_total_harga'];
-								  $dp = $data['pengukuran_dp'];
-								  $sisa = $totalharga - $dp;
+								  $dp = $data['pengukuran_dp_awal'];
+								  $diskon = $data['pengukuran_diskon'];
+								  $sisa = $totalharga - $dp - $diskon;
 								?>
-
+									<tr>
+										<td>Diskon</td>
+										<td>:</td>
+										<td>Rp <?php echo format_rupiah($diskon); ?></td>
+									</tr>
+									<tr>
+										<td>Dp</td>
+										<td>:</td>
+										<td>Rp <?php echo format_rupiah($data["pengukuran_dp"]); ?></td>
+									</tr>
 									<tr>
 										<td>Sisa</td>
 										<td>:</td>
@@ -752,6 +762,7 @@ if ($_GET['menu']=='home') {
 										<td>
 											<input type="hidden" name="sisa" class="form-control" value="<?php echo $sisa; ?>">
 											<input type="hidden" name="status" class="form-control" value="<?php echo $data['pengukuran_status']; ?>">
+											<input type="hidden" name="diskon" class="form-control" value="<?php echo $data['pengukuran_diskon']; ?>">
 											<input type="hidden" name="dp" class="form-control" value="<?php echo $data['pengukuran_dp']; ?>">
 							                <input type="hidden" name="id" class="form-control" value="<?php echo $data['pengukuran_id']; ?>">
 							                <input type="text" name="bayar" class="form-control" style="text-align: right; margin-top: 10px; height: auto;" value="0" id="price">
@@ -778,22 +789,23 @@ if ($_GET['menu']=='home') {
 									<tr>
 										<td>Status</td>
 										<td>:</td>
-										<td><?php echo $data["pengukuran_status"]; ?>
-										<?php
-
-										if ($data["pengukuran_status"]=='Selesai Pemasangan'){
-											# code...
-											?>
-										    <input type="hidden" name="status" class="form-control" id="status" value="Lunas">
-			                      			<input type="submit" class="btn btn-success" value="Lunas" name="gantistatuslunas" style="margin: 0px auto;">
-										<?php
-										}
-										?>
-
-										</td>
+										<td><?php echo $data["pengukuran_status"]; ?></td>
 									</tr>
+
 									<tr>
-										<td colspan="2"></td>
+										<td colspan="2">
+											<?php
+
+											if ($data["pengukuran_status"]=='Selesai Pemasangan' || $data["pengukuran_status"]=='Selesai Finishing'){
+												
+												?>
+											    <input type="hidden" name="tagihan" class="form-control" id="status" value="Lunas">
+											    <input type="hidden" name="status" class="form-control" id="status" value="Lunas">
+				                      			<input type="submit" class="btn btn-success" value="Lunas" name="gantistatuslunas" style="padding: 5px 16px;font-size: 13px;margin: 10px auto 0px	;">
+											<?php
+											}
+											?>
+										</td>
 										<td>
 
 										    <a href="pdf/save-pdf-penawaran.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-right btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Invoice</a>
@@ -971,7 +983,7 @@ if ($_GET['menu']=='home') {
 				          if ($jenisnama=="Gorden"||$jenisnama=="Vitras"||$jenisnama=="Gorden & Vitras") {
 				            # code...
 				          ?>
-				            <label>Jenis</label>
+				            <label>Jenis</label>
 				            <select class="form-control" name="jenis">
 				              <option value="" >Pilih Jenis</option>
 				              <?php
@@ -996,15 +1008,15 @@ if ($_GET['menu']=='home') {
 				            <?php
 				          } else {
 				          ?>
-				            <label>Jenis: <?php echo $data['jenis_nama'];?></label>
+				            <label>Jenis: <?php echo $data['jenis_nama'];?></label>
 				          <?php
 				          }
 				          */
 				          ?>
-				          <label>Jenis: <?php echo $data['jenis_nama'];?></label>
+				          <label>Jenis: <?php echo $data['jenis_nama'];?></label>
 				          </div>
 				          <div class="col-md-12 col-md-offset-0 col-custom-left form-group">
-				            <label>Model</label>
+				            <label>Model</label>
 				            <select class="form-control" name="model">
 				            <?php
 				            $sqlte1="SELECT * from model";
@@ -1051,7 +1063,7 @@ if ($_GET['menu']=='home') {
 				            </select>
 				          </div>
 				          <div class="col-md-12 col-md-offset-0 col-custom-left form-group">
-				            <label>Bahan</label>
+				            <label>Bahan</label>
 				            <select class="form-control" name="bahan">
 				            <?php
 				            $sqlte1="SELECT * from kain WHERE kain_jenis='$idjenis'";
@@ -1336,7 +1348,7 @@ if ($_GET['menu']=='home') {
 									<td></td>
 								</tr>
 								<tr>
-									<td>Tanggal Pasang</td>
+									<td>Tanggal Pasang</td>
 									<td>:</td>
 									<td><?php echo $tanggalpasang1; ?></td>
 									<td></td>
@@ -1559,7 +1571,7 @@ if ($_GET['menu']=='home') {
 		                      <th rowspan="2">Jenis<br>G/V/BL</th>
 		                      <th rowspan="2">Kode<br>Bahan</th>
 		                      <th rowspan="2">Model</th>
-		                      <th rowspan="2">KT/E</th>
+		                      <th rowspan="2">KT/E</th>
 		                      <th colspan="2">Ukuran</th>
 		                      <th rowspan="2">Jumlah</th>
 		                    </tr>
@@ -1729,7 +1741,7 @@ if ($_GET['menu']=='home') {
 		                      <th rowspan="2" width="200px">Ruang</th>
 		                      <th rowspan="2">Jenis<br>G/V/BL</th>
 		                      <th rowspan="2">Kode<br>Bahan</th>
-		                      <th rowspan="2">Model</th>
+		                      <th rowspan="2">Model</th>
 		                      <th rowspan="2">KT/E</th>
 		                      <th rowspan="2">Jumlah</th>
 		                      <th colspan="2">Ukuran</th>
@@ -2014,7 +2026,7 @@ if ($_GET['menu']=='home') {
 
 								?>
 							  <th colspan="3" style="text-align: center;">Rel</th>
-		                      <th rowspan="2" width="100px">Status</th>
+		                      <th rowspan="2" width="100px">Status</th>
 		                      <th rowspan="2" width="100px">Action</th>
 		                    </tr>
 		                    <tr>
@@ -2931,7 +2943,7 @@ if ($_GET['menu']=='home') {
 	    <!-- Content Header (Page header) -->
 	    <section class="content-header">
 	      <h1>
-	        Detail Pelanggan
+	        Detail Pelanggan
 	      </h1>
 	    </section>
 
@@ -3360,7 +3372,7 @@ if ($_GET['menu']=='home') {
 		                	$text_line = explode(":",$_GET['tanggal']);
 							$tgl1=$text_line[0];
 							$tgl2=$text_line[1];
-		                	$query=mysql_query("SELECT pengukuran_bulan, sum(pengukuran_total_harga) as total, sum(pengukuran_diskon) as diskon from pengukuran where pengukuran_bulan between '$tgl1' and '$tgl2' group by pengukuran_bulan order by pengukuran_bulan ASC");
+		                	$query=mysql_query("SELECT pengukuran_bulan, sum(pengukuran_total_harga) as total, sum(pengukuran_diskon) as diskon from pengukuran where pengukuran_tanggal_deal between '%$tgl1%' and '%$tgl2%' group by pengukuran_bulan order by pengukuran_bulan ASC");
 								while ($datatea=mysql_fetch_array($query)) {
 
 								$t = $datatea["pengukuran_bulan"];
@@ -3368,12 +3380,12 @@ if ($_GET['menu']=='home') {
 							
 							?>
 								<tr>
-									<td><?php echo $t; ?></td>
+									<td><a href="?menu=laporandetail&tanggal=<?php echo $t; ?>"><?php echo $t; ?></a></td>
 									<?php /*
 									<td>Rp. <?php echo format_rupiah($datatea["total"]); ?></td>
 									<td>Rp. <?php echo format_rupiah($datatea["diskon"]); ?></td>
 									*/ ?>
-									<td>Rp. <?php echo format_rupiah($bersih); ?></td>
+									<td><a href="?menu=laporandetail&tanggal=<?php echo $t; ?>">Rp. <?php echo format_rupiah($bersih); ?></a></td>
 								</tr>
 							<?php
 							}
@@ -3389,6 +3401,94 @@ if ($_GET['menu']=='home') {
 	              	
 	              	?>
 		            </div>
+		            <!-- /.box-body -->
+				</div>
+			</div>
+
+	      </div>
+	      <!-- /.row -->
+	    </section>
+	    <!-- /.content -->
+	  </div>
+
+
+
+	<?php
+
+}  elseif ($_GET['menu']=='laporandetail') {
+	date_default_timezone_set('Asia/jakarta');
+	$tgl=date('j - m - Y');
+	$tgl1=date('Y-m-d');
+	?>
+	<!-- Content Wrapper. Contains page content -->
+	  <div class="content-wrapper">
+	    <!-- Content Header (Page header) -->
+	    <section class="content-header">
+	      <h1>
+	        Laporan
+	      </h1>
+	    </section>
+
+	    <!-- Main content -->
+	    <section class="content">
+	      <div class="row">
+			
+	        <div class="col-md-12 col-md-offset-0">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">Laporan Penjualan Detail</h3>
+						
+					</div>
+					<!-- /.box-header -->
+		            <div class="box-body">
+		            <?php 
+	              	$tgl = $_GET['tanggal'];
+              		?>
+              		<table id="" class="table table-bordered table-striped">
+		                <thead>
+		                <tr>
+		                  <th>Tanggal</th>
+		                  <th>Nama Pelanggan</th>
+		                  <th>Keterangan</th>
+		                  <th style="text-align: right;">Jumlah</th>
+		                </tr>
+		                </thead>
+		                <tbody>
+		                <?php
+			                $jml=0;
+		                	$query=mysql_query("SELECT * from pengukuran, users_lain where pengukuran_pelanggan=id and pengukuran_tanggal_deal LIKE '%$tgl%'");
+								while ($datatea=mysql_fetch_array($query)) {
+								$jml+=$datatea["pengukuran_dp_awal"];
+							?>
+								<tr>
+									<td><?php echo $datatea['pengukuran_tanggal_deal']; ?></td>
+									<td><?php echo $datatea["name"]; ?></td>
+									<td>DP</td>
+									<td style="text-align: right;">Rp. <?php echo format_rupiah($datatea["pengukuran_dp_awal"]); ?></td>
+								</tr>
+							<?php
+							}
+
+							$query=mysql_query("SELECT * from pengukuran, users_lain where pengukuran_pelanggan=id and pengukuran_tanggal_lunas LIKE '%$tgl%'");
+								while ($datatea=mysql_fetch_array($query)) {
+								$jml+=$datatea["pengukuran_pelunasan"];
+							?>
+								<tr>
+									<td><?php echo $datatea['pengukuran_tanggal_lunas']; ?></td>
+									<td><?php echo $datatea["name"]; ?></td>
+									<td>Pelunasan</td>
+									<td style="text-align: right;">Rp. <?php echo format_rupiah($datatea["pengukuran_pelunasan"]); ?></td>
+								</tr>
+							<?php
+							}
+		                ?>
+		            		<tr>
+		            			<th colspan="3" style="border-top: 2px solid #000;">Total</th>
+		            			<th style="text-align: right;border-top: 2px solid #000;">Rp. <?php echo format_rupiah($jml); ?></th>
+		            		</tr>
+		                </tbody>
+		            </table>
+              		</div>
 		            <!-- /.box-body -->
 				</div>
 			</div>

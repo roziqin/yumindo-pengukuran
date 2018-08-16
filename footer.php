@@ -111,6 +111,23 @@
       "autoWidth": true,
       "order": [[ 0, "desc" ]]
     });
+    $('#laporan1').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": false,
+      "info": true,
+      "autoWidth": false
+    });
+    $('#totallaporan').DataTable({
+      "paging": false,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": false,
+      "info": false,
+      "autoWidth": false,
+      "order": false
+    });
 
     for (var i = 1; i < 20; i++) {
       $("#table"+i).DataTable({

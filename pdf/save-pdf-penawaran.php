@@ -54,7 +54,15 @@ $data3=mysql_fetch_array($query3);
 
 }
 $html = '
-	
+	<style>
+table.print {
+    border-collapse: collapse;
+}
+
+table.print , table.print td, table.print th {
+    border: 1px solid black;
+}
+</style>
 	<div style="width: 100%; display: inline-block;"><img src="logoyumindo.png" width="100px" height="auto" style="float: left;display: inline-block;"><div style="float: left; display: inline-block; width: 205px; padding-top: 20px;">Jalan Semanggi Timur Kav 1A, Jalan Soekarno Hatta, Jatimulyo, Kec. Lowokwaru, Kota Malang</div></div>
 	<div style="clear: both;"></div>
 	<table  width="100%" border="0"  style="font-size: 13px;"">
@@ -90,14 +98,14 @@ $html = '
 	  </tr>
 	</table>
 
-	<table width="100%" border="1"  style="font-size: 13px;border-spacing: 0;" class="print">
+	<table width="100%"  style="font-size: 13px;border-spacing: 0;" class="print">
 	  <tr style="text-align: center;">
-	    <th  width="280px">Ruang</th>
+	    <th  width="200px">Ruang</th>
 	    <th >Jumlah</th>
 	    <th >Jenis<br>G/V/BL</th>
 	    <th >Kode<br>Bahan</th>
 	    <th  width="150px">model</th>
-	    <th >Harga</th>
+	    <th width="100px">Harga</th>
 	  </tr>
 	';
 	$tot = 0;
@@ -114,7 +122,7 @@ $html = '
 		$html.='
 			<tr>
 				<td style="text-align: left;">'.$datatea["pengukuran_detail_ruang"].'</td>
-				<td>'.$datatea["pengukuran_detail_jumlah"].'</td>
+				<td style="text-align: center;">'.$datatea["pengukuran_detail_jumlah"].'</td>
 				<td>'.$datatea["jenis_nama"].'</td>
 				<td>'.$datatea["pengukuran_detail_kode_bahan"].''.$kode1.'</td>
 				<td>'.$datatea["model_nama"].'</td>
@@ -130,15 +138,15 @@ $html = '
 			# code...
 			$html.='
 				<tr>
-					<td colspan="5">Total</td>
-					<td style="text-align:right;">Rp '.format_rupiah($tot).'</td>
+					<td colspan="5" style="border-top:2px solid #000;">Total</td>
+					<td style="text-align:right;border-top:2px solid #000;">Rp '.format_rupiah($tot).'</td>
 				</tr>';
 		} else {
 			# code...
 			$html.='
 				<tr>
-					<td colspan="5">Subtotal</td>
-					<td style="text-align:right;">Rp '.format_rupiah($tot).'</td>
+					<td colspan="5" style="border-top:2px solid #000;">Subtotal</td>
+					<td style="text-align:right;border-top:2px solid #000;">Rp '.format_rupiah($tot).'</td>
 				</tr>
 				<tr>
 					<td colspan="5">Diskon</td>
@@ -220,23 +228,23 @@ $html = '
 		# code...
 		$html.='
 			<tr>
-				<td colspan="4">Subtotal</td>
-				<td style="text-align:right;">Rp '.format_rupiah($tot).'</td>
+				<td colspan="5" style="border-top:2px solid #000;">Subtotal</td>
+				<td style="text-align:right; border-top:2px solid #000;">Rp '.format_rupiah($tot).'</td>
 			</tr>
 			<tr>
-				<td colspan="4">Diskon</td>
+				<td colspan="5">Diskon</td>
 				<td style="text-align:right;">Rp '.format_rupiah($diskon).'</td>
 			</tr>
 			<tr>
-				<td colspan="4">Total</td>
+				<td colspan="5">Total</td>
 				<td style="text-align:right;">Rp '.format_rupiah($totalharga).'</td>
 			</tr>
 			<tr>
-				<td colspan="4">DP</td>
+				<td colspan="5">DP</td>
 				<td style="text-align:right;">Rp '.format_rupiah($dp).'</td>
 			</tr>
 			<tr>
-				<td colspan="4">Sisa</td>
+				<td colspan="5">Sisa</td>
 				<td style="text-align:right;">Rp '.format_rupiah($sisa).'</td>
 			</tr>
 		</table>

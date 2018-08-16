@@ -45,6 +45,10 @@ table.dataTable.custom1 thead > tr > th {
     text-align: center;
     vertical-align: middle;
 }
+
+table.table a {
+	display: block;
+}
 .box-body .barang {
 	border: 1px solid #000000;
 	    min-height: 50px;

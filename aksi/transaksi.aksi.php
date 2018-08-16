@@ -720,7 +720,7 @@ $wkt=date('G:i:s');
 		$dataukur=mysql_fetch_array($queryukur);
 		$total = $dataukur["jumlah"];
 
-		mysql_query("UPDATE pengukuran SET pengukuran_total_harga='$total'");
+		mysql_query("UPDATE pengukuran SET pengukuran_total_harga='$total' WHERE pengukuran_id='$idukur'");
 	    	echo ("<script>location.href='../admin.php?menu=detail&id=$idukur'</script>");
 
 	} elseif (isset($_POST['editpengukuran'])) {
@@ -752,15 +752,19 @@ $wkt=date('G:i:s');
 		$harga = 0;
 		$hasilhitung = 0;
 		$kk = $_POST['kualitas'];
+		$bahan_lembar = 0;
 
 		if ($_POST['kualitas']=='Premium') {
 			# code...
 			$kualitas = 3;
+			$kualitas_vitras = 2.6;
 		} elseif ($_POST['kualitas']=='Gold') {
 			$kualitas = 2.6;
+			$kualitas_vitras = 2.6;
 		}else {
 			# code...
 			$kualitas = 2.3;
+			$kualitas_vitras = 2.3;
 		}
 		
 
@@ -776,10 +780,45 @@ $wkt=date('G:i:s');
 		$luasasli = $panjangasli * $lebarasli;
 
         $bahan_kain = ($lebar * $kualitas)/100;
+        $bahan_kain_vitras = ($lebar * $kualitas_vitras)/100;
+
+	    $sqlkainzz="SELECT * from kain WHERE kain_id='$bahanid'";
+		$querykainzz=mysql_query($sqlkainzz);
+		$datakainzz=mysql_fetch_array($querykainzz);
+
+		$sqlmodelzz="SELECT * from model WHERE model_id='$modelid'";
+		$querymodelzz=mysql_query($sqlmodelzz);
+		$datamodelzz=mysql_fetch_array($querymodelzz);
+
+		if ($datamodelzz['model_nama']=='Triplet' && $datakainzz['kain_nama']=='Kain Blackout') {
+			# code...
+	        $bahan_kain = ($lebar * 2.6)/100;
+		
+		} elseif ($datakainzz['kain_nama'] == 'Kain Lokal') {
+			$bahan_lembar = ceil($lebar/50);
+			$bahan_kain = $bahan_lembar * (($panjang+50)/100);
+		} else {
+			# code...
+		}
+		
+
         $bahan_rel = $lebar / 100;
-        $bahan_ring = $bahan_kain*8;
+
+        if ($datamodelzz['model_nama']=='Minimalis/ Smoke Ring' && $datakainzz['kain_nama']=='Kain Lokal') {
+			# code...
+	        $bahan_ring = $bahan_lembar*8;
+		} else {
+	        $bahan_ring = $bahan_kain*8;
+		}
+
+        
         $bahan_hook = 1;
         $bahan_tali = 1;
+
+
+        $sqlvittali="SELECT * from bahan WHERE bahan_nama='tali'";
+		$queryvittali=mysql_query($sqlvittali);
+		$datavittali=mysql_fetch_array($queryvittali);
 
 
 		
@@ -850,7 +889,6 @@ $wkt=date('G:i:s');
 				if ($lebarasli < 40) {
 					$lebar = 40;
 				}
-				$bahan_kain = ($lebar * $kualitas)/100;
 		        $bahan_rel = $lebar / 100;
 				$nn = 'jam pasir vitras rel';
 			} else {
@@ -858,7 +896,10 @@ $wkt=date('G:i:s');
 				$nn = 'triplet vitras rel';
 			}
 
-            $hasilhitung += $bahan_kain * $datavitras['bahan_harga'];
+            $hasilhitung += $bahan_kain_vitras * $datavitras['bahan_harga'];
+
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
+
 
 
 			$sqlvitrel="SELECT * from bahan WHERE bahan_nama='$nn'";
@@ -882,6 +923,7 @@ $wkt=date('G:i:s');
 
             $hasilhitung += $bahan_kain * $datakain['bahan_harga'];
             echo $hasilhitung." - ";
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
 
             if ($datamodel['model_nama']=='Minimalis/ Smoke Ring') {
 				# code...
@@ -895,7 +937,14 @@ $wkt=date('G:i:s');
 
 			} else {
 				# code...
-				$nn = 'triplet rel';
+				if ($datakainzz['kain_nama'] == 'Kain Lokal') {
+					# code...
+					$nn = 'triplet rel lokal';
+				} else {
+					# code...
+					$nn = 'triplet rel blackout';
+				}
+				
 			}
 
             
@@ -912,16 +961,8 @@ $wkt=date('G:i:s');
 			$queryhook=mysql_query($sqlhook);
 			$datahook=mysql_fetch_array($queryhook);
 
-            $hasilhitung += $bahan_hook * $datahook['bahan_harga'];
-            echo $hasilhitung." - ";
-
-
-			$sqltali="SELECT * from bahan WHERE bahan_nama='tali'";
-			$querytali=mysql_query($sqltali);
-			$datatali=mysql_fetch_array($querytali);
-
-            $hasilhitung += $bahan_tali * $datatali['bahan_harga'];
-            echo $hasilhitung." - ";
+            //$hasilhitung += $bahan_hook * $datahook['bahan_harga'];
+            //echo $hasilhitung." - ";
            
         
         } elseif ($jenis == 'Gorden & Vitras') {
@@ -935,7 +976,8 @@ $wkt=date('G:i:s');
 			$datakain=mysql_fetch_array($querykain);
 
             $hasilhitung += $bahan_kain * $datakain['bahan_harga'];
-
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
+            
 
             if ($datamodel['model_nama']=='Minimalis/ Smoke Ring') {
 				# code...
@@ -946,33 +988,34 @@ $wkt=date('G:i:s');
 				$dataring=mysql_fetch_array($queryring);
 
 	            $hasilhitung += $bahan_ring * $dataring['bahan_harga'];
+	            echo $hasilhitung.'<br>';
 
 			} else {
 				# code...
-				$nn = 'triplet rel';
+				if ($datakainzz['kain_nama'] == 'Kain Lokal') {
+					# code...
+					$nn = 'triplet rel lokal';
+				} else {
+					# code...
+					$nn = 'triplet rel blackout';
+				}
 			}
+
 
 			$sqlvitrel="SELECT * from bahan WHERE bahan_nama='$nn'";
 			$queryvitrel=mysql_query($sqlvitrel);
 			$datavitrel=mysql_fetch_array($queryvitrel);
 	
             $hasilhitung += $bahan_rel * $datavitrel['bahan_harga'];
+       
 
-
+            /*
 			$sqlhook="SELECT * from bahan WHERE bahan_nama='hook'";
 			$queryhook=mysql_query($sqlhook);
 			$datahook=mysql_fetch_array($queryhook);
 
             $hasilhitung += $bahan_hook * $datahook['bahan_harga'];
-
-
-			$sqltali="SELECT * from bahan WHERE bahan_nama='tali'";
-			$querytali=mysql_query($sqltali);
-			$datatali=mysql_fetch_array($querytali);
-
-            $hasilhitung += $bahan_tali * $datatali['bahan_harga'];
-
-
+			*/
 
             
 
@@ -980,9 +1023,10 @@ $wkt=date('G:i:s');
 			$sqltea="SELECT * from bahan WHERE bahan_nama='vitras'";
 			$querytea=mysql_query($sqltea);
 			$datavitras=mysql_fetch_array($querytea);
-            $hasilhitung += $bahan_kain * $datavitras['bahan_harga'];
+            $hasilhitung += $bahan_kain_vitras * $datavitras['bahan_harga'];
+       
             
-
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
 
 			$sqlmodel1="SELECT * from model WHERE model_id='$modelid'";
 			$querymodel1=mysql_query($sqlmodel1);
@@ -1027,6 +1071,7 @@ $wkt=date('G:i:s');
 	    	echo ("<script>location.href='../home.php?menu=home'</script>");
 	
 	} elseif (isset($_POST['editpengukurandetail'])) {
+		
 		$user = $_SESSION['login_user'];
 		$idtemp = $_POST['idtemp'];
 		$ruang = $_POST['ruang'];
@@ -1055,15 +1100,19 @@ $wkt=date('G:i:s');
 		$harga = 0;
 		$hasilhitung = 0;
 		$kk = $_POST['kualitas'];
+		$bahan_lembar = 0;
 
 		if ($_POST['kualitas']=='Premium') {
 			# code...
 			$kualitas = 3;
+			$kualitas_vitras = 2.6;
 		} elseif ($_POST['kualitas']=='Gold') {
 			$kualitas = 2.6;
+			$kualitas_vitras = 2.6;
 		}else {
 			# code...
 			$kualitas = 2.3;
+			$kualitas_vitras = 2.3;
 		}
 		
 
@@ -1079,11 +1128,45 @@ $wkt=date('G:i:s');
 		$luasasli = $panjangasli * $lebarasli;
 
         $bahan_kain = ($lebar * $kualitas)/100;
+        $bahan_kain_vitras = ($lebar * $kualitas_vitras)/100;
+
+	    $sqlkainzz="SELECT * from kain WHERE kain_id='$bahanid'";
+		$querykainzz=mysql_query($sqlkainzz);
+		$datakainzz=mysql_fetch_array($querykainzz);
+
+		$sqlmodelzz="SELECT * from model WHERE model_id='$modelid'";
+		$querymodelzz=mysql_query($sqlmodelzz);
+		$datamodelzz=mysql_fetch_array($querymodelzz);
+
+		if ($datamodelzz['model_nama']=='Triplet' && $datakainzz['kain_nama']=='Kain Blackout') {
+			# code...
+	        $bahan_kain = ($lebar * 2.6)/100;
+		
+		} elseif ($datakainzz['kain_nama'] == 'Kain Lokal') {
+			$bahan_lembar = ceil($lebar/50);
+			$bahan_kain = $bahan_lembar * (($panjang+50)/100);
+		} else {
+			# code...
+		}
+		
+
         $bahan_rel = $lebar / 100;
-        $bahan_ring = $bahan_kain*8;
+
+        if ($datamodelzz['model_nama']=='Minimalis/ Smoke Ring' && $datakainzz['kain_nama']=='Kain Lokal') {
+			# code...
+	        $bahan_ring = $bahan_lembar*8;
+		} else {
+	        $bahan_ring = $bahan_kain*8;
+		}
+
+        
         $bahan_hook = 1;
         $bahan_tali = 1;
 
+
+        $sqlvittali="SELECT * from bahan WHERE bahan_nama='tali'";
+		$queryvittali=mysql_query($sqlvittali);
+		$datavittali=mysql_fetch_array($queryvittali);
 
 		
 		if ($jenis == 'Poni Motif') {
@@ -1136,7 +1219,7 @@ $wkt=date('G:i:s');
 			$sqltea="SELECT * from bahan WHERE bahan_nama='vitras'";
 			$querytea=mysql_query($sqltea);
 			$datavitras=mysql_fetch_array($querytea);
-            
+
 
 			$sqlmodel="SELECT * from model WHERE model_id='$modelid'";
 			$querymodel=mysql_query($sqlmodel);
@@ -1153,7 +1236,6 @@ $wkt=date('G:i:s');
 				if ($lebarasli < 40) {
 					$lebar = 40;
 				}
-				$bahan_kain = ($lebar * $kualitas)/100;
 		        $bahan_rel = $lebar / 100;
 				$nn = 'jam pasir vitras rel';
 			} else {
@@ -1161,7 +1243,10 @@ $wkt=date('G:i:s');
 				$nn = 'triplet vitras rel';
 			}
 
-            $hasilhitung += $bahan_kain * $datavitras['bahan_harga'];
+            $hasilhitung += $bahan_kain_vitras * $datavitras['bahan_harga'];
+
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
+
 
 
 			$sqlvitrel="SELECT * from bahan WHERE bahan_nama='$nn'";
@@ -1185,6 +1270,7 @@ $wkt=date('G:i:s');
 
             $hasilhitung += $bahan_kain * $datakain['bahan_harga'];
             echo $hasilhitung." - ";
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
 
             if ($datamodel['model_nama']=='Minimalis/ Smoke Ring') {
 				# code...
@@ -1198,7 +1284,14 @@ $wkt=date('G:i:s');
 
 			} else {
 				# code...
-				$nn = 'triplet rel';
+				if ($datakainzz['kain_nama'] == 'Kain Lokal') {
+					# code...
+					$nn = 'triplet rel lokal';
+				} else {
+					# code...
+					$nn = 'triplet rel blackout';
+				}
+				
 			}
 
             
@@ -1215,16 +1308,8 @@ $wkt=date('G:i:s');
 			$queryhook=mysql_query($sqlhook);
 			$datahook=mysql_fetch_array($queryhook);
 
-            $hasilhitung += $bahan_hook * $datahook['bahan_harga'];
-            echo $hasilhitung." - ";
-
-
-			$sqltali="SELECT * from bahan WHERE bahan_nama='tali'";
-			$querytali=mysql_query($sqltali);
-			$datatali=mysql_fetch_array($querytali);
-
-            $hasilhitung += $bahan_tali * $datatali['bahan_harga'];
-            echo $hasilhitung." - ";
+            //$hasilhitung += $bahan_hook * $datahook['bahan_harga'];
+            //echo $hasilhitung." - ";
            
         
         } elseif ($jenis == 'Gorden & Vitras') {
@@ -1238,7 +1323,8 @@ $wkt=date('G:i:s');
 			$datakain=mysql_fetch_array($querykain);
 
             $hasilhitung += $bahan_kain * $datakain['bahan_harga'];
-
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
+            
 
             if ($datamodel['model_nama']=='Minimalis/ Smoke Ring') {
 				# code...
@@ -1249,33 +1335,34 @@ $wkt=date('G:i:s');
 				$dataring=mysql_fetch_array($queryring);
 
 	            $hasilhitung += $bahan_ring * $dataring['bahan_harga'];
+	            echo $hasilhitung.'<br>';
 
 			} else {
 				# code...
-				$nn = 'triplet rel';
+				if ($datakainzz['kain_nama'] == 'Kain Lokal') {
+					# code...
+					$nn = 'triplet rel lokal';
+				} else {
+					# code...
+					$nn = 'triplet rel blackout';
+				}
 			}
+
 
 			$sqlvitrel="SELECT * from bahan WHERE bahan_nama='$nn'";
 			$queryvitrel=mysql_query($sqlvitrel);
 			$datavitrel=mysql_fetch_array($queryvitrel);
 	
             $hasilhitung += $bahan_rel * $datavitrel['bahan_harga'];
+       
 
-
+            /*
 			$sqlhook="SELECT * from bahan WHERE bahan_nama='hook'";
 			$queryhook=mysql_query($sqlhook);
 			$datahook=mysql_fetch_array($queryhook);
 
             $hasilhitung += $bahan_hook * $datahook['bahan_harga'];
-
-
-			$sqltali="SELECT * from bahan WHERE bahan_nama='tali'";
-			$querytali=mysql_query($sqltali);
-			$datatali=mysql_fetch_array($querytali);
-
-            $hasilhitung += $bahan_tali * $datatali['bahan_harga'];
-
-
+			*/
 
             
 
@@ -1283,9 +1370,10 @@ $wkt=date('G:i:s');
 			$sqltea="SELECT * from bahan WHERE bahan_nama='vitras'";
 			$querytea=mysql_query($sqltea);
 			$datavitras=mysql_fetch_array($querytea);
-            $hasilhitung += $bahan_kain * $datavitras['bahan_harga'];
+            $hasilhitung += $bahan_kain_vitras * $datavitras['bahan_harga'];
+       
             
-
+            $hasilhitung += $bahan_tali * $datavittali['bahan_harga'];
 
 			$sqlmodel1="SELECT * from model WHERE model_id='$modelid'";
 			$querymodel1=mysql_query($sqlmodel1);
@@ -1796,6 +1884,8 @@ echo mysql_error();
 			# code...
 			$status = "Deal";
 			$tanggaldeal = $tgl;
+			$b="INSERT into laporan_omset(laporan_omset_tanggal,laporan_omset_bulan,laporan_omset_pengukuran_id,laporan_omset_jumlah)values('$tgl','$bulan','$idp','$dp')";
+			mysql_query($b);
 		} else {
 			$status = "Penawaran";
 			$tanggaldeal = '0000-00-00';
@@ -1987,7 +2077,7 @@ echo mysql_error();
 		if ($tot==0) {
 			# code...
 			$status = 'Lunas';
-			$a="UPDATE pengukuran set pengukuran_status='$status', pengukuran_dp='$totbayar' where pengukuran_id='$id'";
+			$a="UPDATE pengukuran set pengukuran_status='$status', pengukuran_dp='$totbayar', pengukuran_pelunasan='$bayar', pengukuran_tanggal_lunas='$tgl' where pengukuran_id='$id'";
 			mysql_query($a);
 			
 		} else {
@@ -1996,6 +2086,8 @@ echo mysql_error();
 			mysql_query($a);
 
 		}
+
+		$b="INSERT into laporan_omset(laporan_omset_tanggal,laporan_omset_bulan,laporan_omset_pengukuran_id,laporan_omset_jumlah)values('$tgl','$bulan','$id','$bayar')";
 		
 		
 		

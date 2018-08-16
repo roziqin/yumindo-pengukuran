@@ -10,7 +10,7 @@
 <section class="content">
   <div class="row">
   	<div class="col-md-12 col-md-offset-0">
-  		<?php include "tambahkontent.php" ; ?>
+  		<?php include "tambahkontentdesktop.php" ; ?>
   	</div>
   </div>
   <!-- /.row -->

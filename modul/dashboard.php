@@ -297,12 +297,11 @@
             <tr>
               <th width="100px">Tanggal</th>
               <th width="25%">Nama Pelanggan</th>
-              <th>Email</th>
-		      <th>Alamat</th>
-              <th width="130px">Telepon</th>
+		      <th width="30%">Alamat</th>
+              <th width="110px">Telepon</th>
               <th>Petugas</th>
               <th>Status</th>
-              <th width="150px">Total Tagihan</th>
+              <th width="170px">Total Tagihan</th>
               <th></th>
             </tr>
             </thead>
@@ -316,13 +315,12 @@
                 	$sqlte1="SELECT * from users_lain where id='$idpel' ";
 					$queryte1=mysql_query($sqlte1);
 					$data1=mysql_fetch_array($queryte1);
-					if ($data['pengukuran_status']=='Selesai Pemasangan' || $data['pengukuran_status']=='Lunas') {
+					if ($data['pengukuran_status']=='Selesai Pemasangan' || $data['pengukuran_status']=='Selesai Finishing') {
 
 				?>
 					<tr>
 						<td><?php echo date('d-m-Y', strtotime($data["pengukuran_tanggal"] . ' +0 day')); ?></td>
 						<td><?php echo $data1["name"]; ?></td>
-						<td><?php echo $data1["email"]; ?></td>
 						<td><?php echo $data1["alamat"]; ?></td>
 						<td><?php echo $data1["telepon"]; ?></td>
 						<td><?php echo $data["name"]; ?></td>
@@ -354,7 +352,7 @@
 	            </thead>
 	            <tbody>
 	            <?php
-	            	$sqlte="SELECT * from pengukuran, users_lain where pengukuran_pelanggan=id and pengukuran_status='Deal' order by pengukuran_id DESC ";
+	            	$sqlte="SELECT * from pengukuran, users_lain where pengukuran_pelanggan=id order by pengukuran_status DESC ";
 					$queryte=mysql_query($sqlte);
 					while ($data=mysql_fetch_array($queryte)) {
 
@@ -365,6 +363,8 @@
 	                	$sqlte1="SELECT name as nama_user from pengukuran, users_lain where pengukuran_user=id ";
 						$queryte1=mysql_query($sqlte1);
 						$data1=mysql_fetch_array($queryte1);
+
+						if ($data["pengukuran_status"]!='Penawaran') {
 					?>
 						<tr>
 							<td><a href="?menu=detailpemasangan&id=<?php echo $data['pengukuran_id'];?>"><?php echo $tanggalpasang1; ?></a></td>
@@ -373,6 +373,7 @@
 						</tr>
 
 					<?php
+						}
 					}
 
 
