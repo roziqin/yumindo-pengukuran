@@ -86,18 +86,18 @@ $html = '
 	</table>
 
 	<table width="100%" border="1"  style="font-size: 13px;border-spacing: 0;" class="print">
-	  <tr style="text-align: center;">
-	    <th rowspan="2" width="280px">Ruang</th>
-	    <th rowspan="2">Jenis<br>G/V/BL</th>
-	    <th rowspan="2">Kode<br>Bahan</th>
-	    <th rowspan="2" width="150px">model</th>
-	    <th rowspan="2">KT/E</th>
+	   <tr style="text-align: center;">
+	    <th rowspan="2">Ruang</th>
+	    <th rowspan="2" width="100px">Jenis<br>G/V/BL</th>
+	    <th rowspan="2" width="130px">Kode Bahan</th>
+	    <th rowspan="2" width="130px">model</th>
+	    <th rowspan="2" width="70px">KT/E</th>
 	    <th colspan="2">Ukuran</th>
-	    <th rowspan="2">Jumlah</th>
+	    <th rowspan="2" width="50px">Jumlah</th>
 	  </tr>
 	  <tr>
-	    <th style="text-align:center;">T</th>
-	    <th style="text-align:center;">L</th>
+	    <th width="40px" style="text-align:center;">T</th>
+	    <th width="40px" style="text-align:center;">L</th>
 	  </tr>
 	';
 	$tot = 0;
@@ -156,7 +156,7 @@ $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
 
 // (Optional) Setup the paper size and orientation
-$dompdf->setPaper('A4', 'landscape');
+$dompdf->setPaper('A4', 'potrait');
 
 // Render the HTML as PDF
 $dompdf->render();

@@ -106,7 +106,7 @@ $html = '
 		    <td colspan="2"><hr></td>
 		  </tr>
 		  <tr>
-		    <td width="50%"></td>
+		    <td width="50%">Saya telah memahami dan menyetujui ukuran, bahan, dan model tersebut di atas</td>
 		    <td ></td>
 		  </tr>
 		  <tr>

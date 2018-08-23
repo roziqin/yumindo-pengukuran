@@ -1380,6 +1380,7 @@ if ($_GET['menu']=='home') {
 								<tr>
 									<td colspan="2"></td>
 									<td colspan="2">
+										<a href="pdf/save-pdf-penawaran.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-left btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Invoice</a><br>
 									    <a href="pdf/save-pdf-pemasangan.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-right btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Form Pemasangan</a>
 									</td>
 								</tr>
@@ -1554,9 +1555,11 @@ if ($_GET['menu']=='home') {
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2"></td>
 									<td colspan="2">
-									    <a href="pdf/save-pdf-jahit.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-right btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Form Jahit</a>
+									</td>
+									<td colspan="2">
+										<a href="pdf/save-pdf-penawaran.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-left btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Invoice</a><br>
+									    <a href="pdf/save-pdf-jahit.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-left btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Form Jahit</a>
 									</td>
 								</tr>
 							</table>
@@ -1727,6 +1730,7 @@ if ($_GET['menu']=='home') {
 								<tr>
 									<td colspan="2"></td>
 									<td colspan="2">
+										<a href="pdf/save-pdf-penawaran.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-left btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Invoice</a><br>
 									    <a href="pdf/save-pdf-jahit.php?id=<?php echo $data['pengukuran_id'];?>" target="_blank" class="btn btn-primary pull-right btn-lg"  style="padding: 5px 16px;font-size: 13px; margin-top: 10px;">Download Form Jahit</a>
 									</td>
 								</tr>
