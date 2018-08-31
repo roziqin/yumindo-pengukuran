@@ -91,6 +91,7 @@
                     <tr>
                       <th rowspan="2" width="200px">Ruang</th>
                       <th colspan="2">Ukuran</th>
+                      <th rowspan="2">Volume</th>
                       <th rowspan="2">Jenis<br>G/V/BL</th>
                       <th rowspan="2">Kode<br>Bahan</th>
                       <th rowspan="2">model</th>
@@ -122,6 +123,7 @@
                         <td><?php echo $datatea["pengukuran_detail_temp_ruang"]; ?></td>
                         <td><?php echo $datatea["pengukuran_detail_temp_tinggi"]; ?></td>
                         <td><?php echo $datatea["pengukuran_detail_temp_lebar"]; ?></td>
+                        <td><?php echo $datatea["pengukuran_detail_temp_volume"]; ?></td>
                         <td><?php echo $datatea["jenis_nama"]; ?></td>
                         <td><?php echo $datatea["pengukuran_detail_temp_kode_bahan"].''.$kode1; ?></td>
                         <td><?php echo $datatea["model_nama"]; ?></td>

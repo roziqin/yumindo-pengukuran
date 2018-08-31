@@ -101,7 +101,8 @@ $html = '
 	    <th rowspan="2">Kode<br>Bahan</th>
 	    <th rowspan="2" >model</th>
 	    <th colspan="2">Ukuran</th>
-	    <th rowspan="2">Jumlah</th>
+	    <th rowspan="2">Vol</th>
+	    <th rowspan="2">Jml</th>
 	    <th rowspan="2">KT/E</th>
 	    <th colspan="3">Rel</th>
 	  </tr>
@@ -143,6 +144,7 @@ $html = '
 				<td style="text-align:center;">'.$datatea["model_nama"].'</td>
 				<td style="text-align:center;">'.$datatea["pengukuran_detail_tinggi"].'</td>
 				<td style="text-align:center;">'.$datatea["pengukuran_detail_lebar"].'</td>
+				<td style="text-align:center;">'.$datatea["pengukuran_detail_volume"].'</td>
 				<td style="text-align:center;">'.$datatea["pengukuran_detail_jumlah"].'</td>
 				<td style="text-align:center;">'.$datatea["pengukuran_detail_kt"].'</td>
 				<td style="text-align:center;">'.$datatea["pengukuran_detail_alat_1"].''.$alat2.'</td>

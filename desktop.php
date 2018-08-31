@@ -50,6 +50,7 @@
                 <tr>
                   <th rowspan="2" width="200px">Ruang</th>
                   <th colspan="2">Ukuran</th>
+                  <th rowspan="2">Volume</th>
                   <th rowspan="2">Jenis<br>G/V/BL</th>
                   <th rowspan="2">Bahan</th>
                   <th rowspan="2">Kode<br>Bahan</th>
@@ -89,6 +90,7 @@
                     <td><?php echo $datatea["pengukuran_detail_temp_ruang"]; ?></td>
                     <td><?php echo $datatea["pengukuran_detail_temp_tinggi"]; ?></td>
                     <td><?php echo $datatea["pengukuran_detail_temp_lebar"]; ?></td>
+                    <td><?php echo $datatea["pengukuran_detail_temp_volume"]; ?></td>
                     <td><?php echo $datatea["jenis_nama"]; ?></td>
                     <td><?php echo $datatea["kain_nama"]; ?></td>
                     <td><?php echo $datatea["pengukuran_detail_temp_kode_bahan"].''.$kode1; ?></td>
@@ -214,7 +216,7 @@ function rubahmodel(combobox)
       var jenis = document.getElementById("jenis").value;
       var model = 0;
       if (!kode) return;
-      xmlhttp.open('get', 'getdata.php?ket=tampilform&jenis='+jenis+'&model='+model+'&bahan='+bahan, true);
+      xmlhttp.open('get', 'getdata.php?idukur=0&ket=tampilform&jenis='+jenis+'&model='+model+'&bahan='+bahan, true);
       xmlhttp.onreadystatechange = function() {
           if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200))
           {
@@ -249,7 +251,7 @@ function rubahbahan()
       var jenis = document.getElementById("jenis").value;
       var model = document.getElementById("model").value;
       if (!kode) return;
-      xmlhttp.open('get', 'getdata.php?ket=tampilform&jenis='+jenis+'&model='+model+'&bahan='+bahan, true);
+      xmlhttp.open('get', 'getdata.php?idukur=0&ket=tampilform&jenis='+jenis+'&model='+model+'&bahan='+bahan, true);
       xmlhttp.onreadystatechange = function() {
           if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200))
           {
@@ -263,7 +265,7 @@ function rubahbahan()
       var jenis = document.getElementById("jenis").value;
       var model = document.getElementById("model").value;
       if (!kode) return;
-      xmlhttp.open('get', 'getdata.php?ket=tampilform&jenis='+jenis+'&model='+model+'&bahan='+bahan, true);
+      xmlhttp.open('get', 'getdata.php?idukur=0&ket=tampilform&jenis='+jenis+'&model='+model+'&bahan='+bahan, true);
       xmlhttp.onreadystatechange = function() {
           if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200))
           {
@@ -275,7 +277,7 @@ function rubahbahan()
 
     } else {
       if (!kode) return;
-      xmlhttp.open('get', 'getdata.php?ket=bahan&id='+kode, true);
+      xmlhttp.open('get', 'getdata.php?idukur=0&ket=bahan&id='+kode, true);
       xmlhttp.onreadystatechange = function() {
           if ((xmlhttp.readyState == 4) && (xmlhttp.status == 200))
           {

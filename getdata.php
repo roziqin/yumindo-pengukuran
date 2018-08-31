@@ -145,6 +145,23 @@ $data=mysql_fetch_array($query);
         <label>Lebar</label>
           <input type="number" name="lebar" class="form-control" id="lebar" placeholder="Lebar" maxlength="5" value="100">
       </div>
+      ';
+      if ($data['jenis_nama']=='Lain-lain') {
+        echo '
+      <div class="col-md-1 col-md-offset-0 col-custom-left form-group">
+        <label>Volume</label>
+          <input type="number" name="volume" class="form-control" id="volume" placeholder="Volume" maxlength="5" value="100">
+      </div>
+        ';
+      } else {
+        echo '
+      <div class="col-md-1 col-md-offset-0 col-custom-left form-group">
+        <label>Volume</label>
+          <input type="number" name="volume" class="form-control" id="volume" placeholder="" maxlength="5" value="" disabled>
+      </div>
+        ';
+      }
+      echo '
       <div class="col-md-1 col-md-offset-0 col-custom-left form-group">
         <label>Jumlah</label>
           <input type="text" name="jumlah" class="form-control" id="jumlah" value="1">
@@ -251,7 +268,7 @@ $data=mysql_fetch_array($query);
       
 	    echo'
     	<input type="hidden" name="kualitas" class="form-control"  value="Premium">
-		<div class="col-md-2 col-md-offset-0 col-custom-left form-group">
+		<div class="col-md-1 col-md-offset-0 col-custom-left form-group">
 		    <input type="submit" class="btn btn-success pull-right btn-lg" value="Input" name="'.$nameinput.'" style="font-size: 14px; margin-top: 20px">
 		</div>
     	';

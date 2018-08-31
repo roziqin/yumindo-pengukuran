@@ -833,7 +833,8 @@ if ($_GET['menu']=='home') {
 		                      <th rowspan="2">KT/E</th>
 		                      <th colspan="2">Rel/Alat</th>
 		                      <th colspan="2">Ukuran</th>
-		                      <th rowspan="2" >Total<br>Harga</th>
+		                      <th rowspan="2" >Vol</th>
+		                      <th rowspan="2" >Total Harga</th>
 		                      <th rowspan="2" ></th>
 		                    </tr>
 		                    <tr>
@@ -865,6 +866,7 @@ if ($_GET['menu']=='home') {
 		                          <td><?php echo $datatea["pengukuran_detail_alat_ukuran"]; ?></td>
 		                          <td><?php echo $datatea["pengukuran_detail_tinggi"]; ?></td>
 		                          <td><?php echo $datatea["pengukuran_detail_lebar"]; ?></td>
+		                          <td><?php echo $datatea["pengukuran_detail_volume"]; ?></td>
 		                          <td style="text-align: right;"><?php echo 'Rp. '. format_rupiah($datatea["pengukuran_detail_harga"]); ?></td>
 			                      <td>
 			                      	<?php
@@ -1131,6 +1133,10 @@ if ($_GET['menu']=='home') {
 				          <div class="col-md-6 col-md-offset-0 col-custom-left form-group">
 				            <label>Lebar</label>
 				              <input type="number" name="lebar" class="form-control" id="lebar" placeholder="Lebar" maxlength="5" value="<?php echo $dataedit["pengukuran_detail_lebar"];?>">
+				          </div>
+				          <div class="col-md-6 col-md-offset-0 col-custom-left form-group">
+				            <label>Volume</label>
+				              <input type="number" name="volume" class="form-control" id="volume" placeholder="Volume" maxlength="5" value="<?php echo $dataedit["pengukuran_detail_volume"];?>">
 				          </div>
 				          <?php
 				            

@@ -27,6 +27,13 @@
 			                	<a href="home.php?menu=model&id=<?php echo $datatea["jenis_id"]; ?>"><?php echo $datatea["jenis_nama"]; ?></a>
 			                </div>
 						<?php
+						} elseif ($datatea["jenis_nama"]=="Lain-lain") {
+						?>
+			                <div class="col-md-3 col-md-offset-0 with-border barang">
+			                	<a href="home.php?menu=lain&id=<?php echo $datatea["jenis_id"]; ?>&model=0&bahan=0"><?php echo $datatea["jenis_nama"]; ?></a>
+			                </div>
+						<?php
+						
 						} else {
 							# code...
 						?>
@@ -236,7 +243,21 @@
 					    <input type="number" name="lebar" class="form-control" id="lebar" placeholder="Lebar" maxlength="5" value="100">
 					</div>
 					<?php
-						
+						if ($data['jenis_nama']=='Lain-lain') {
+						?>
+							<div class="col-md-6 col-md-offset-0 col-custom-left form-group">
+								<label>Volume</label>
+							    <input type="number" name="volume" class="form-control" id="volume" placeholder="Volume" maxlength="5" value="100">
+							</div>
+						<?php
+						} else {
+						?>
+							<div class="col-md-6 col-md-offset-0 col-custom-left form-group">
+								<label>Volume</label>
+							    <input type="number" name="volume" class="form-control" id="volume" placeholder="" maxlength="5" value="0" disabled>
+							</div>
+						<?php
+						}
 						if ($data['jenis_nama']=='Gorden & Vitras'||$data['jenis_nama']=='Vitras'||$data['jenis_nama']=='Gorden'||$data['jenis_nama']=='Poni Polos'||$data['jenis_nama']=='Poni Motif') {
 
 							if ($data['jenis_nama']=='Gorden & Vitras'){

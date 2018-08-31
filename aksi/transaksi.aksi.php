@@ -50,6 +50,7 @@ $wkt=date('G:i:s');
 		$lebar = $_POST['lebar'];
 		$panjangasli = $_POST['panjang'];
 		$lebarasli = $_POST['lebar'];
+		$volume = $_POST['volume'];
 		$harga = 0;
 		$hasilhitung = 0;
 		$kk = $_POST['kualitas'];
@@ -352,6 +353,11 @@ $wkt=date('G:i:s');
          
 
 
+		} elseif ($jenis == 'Lain-lain') {
+
+            $hasilhitung = ($volume / 100) * $hargabahankain;
+            $modelid = 0;
+
 		} else {
         	$sqlte="SELECT * from kain, bahan WHERE kain_bahan=bahan_id and kain_id='$bahanid'";
 			$queryte=mysql_query($sqlte);
@@ -364,7 +370,7 @@ $wkt=date('G:i:s');
 
         $h = $hasilhitung * $jumlah;
 
-		$a="INSERT into pengukuran_detail_temp(pengukuran_temp_id,pengukuran_detail_temp_ruang,pengukuran_detail_temp_jenis,pengukuran_detail_temp_bahan,pengukuran_detail_temp_kode_bahan,pengukuran_detail_temp_kode_bahan_1,pengukuran_detail_temp_model,pengukuran_detail_temp_jumlah,pengukuran_detail_temp_kt,pengukuran_detail_temp_alat_1,pengukuran_detail_temp_alat_2,pengukuran_detail_temp_alat_warna,pengukuran_detail_temp_alat_ukuran,pengukuran_detail_temp_tinggi,pengukuran_detail_temp_lebar,pengukuran_detail_temp_kualitas,pengukuran_detail_temp_harga,pengukuran_detail_temp_user,pengukuran_detail_temp_harga_bahan)values(0,'$ruang','$jenisid','$bahanid','$kodebahan','$kodebahan1','$modelid','$jumlah','$kt','$relalat1','$relalat2','$relwarna','$relukuranasli','$panjangasli','$lebarasli','$kk','$h','$user','$hargabahankain')";
+		$a="INSERT into pengukuran_detail_temp(pengukuran_temp_id,pengukuran_detail_temp_ruang,pengukuran_detail_temp_jenis,pengukuran_detail_temp_bahan,pengukuran_detail_temp_kode_bahan,pengukuran_detail_temp_kode_bahan_1,pengukuran_detail_temp_model,pengukuran_detail_temp_jumlah,pengukuran_detail_temp_kt,pengukuran_detail_temp_alat_1,pengukuran_detail_temp_alat_2,pengukuran_detail_temp_alat_warna,pengukuran_detail_temp_alat_ukuran,pengukuran_detail_temp_tinggi,pengukuran_detail_temp_lebar,pengukuran_detail_temp_kualitas,pengukuran_detail_temp_harga,pengukuran_detail_temp_user,pengukuran_detail_temp_harga_bahan,pengukuran_detail_temp_volume)values(0,'$ruang','$jenisid','$bahanid','$kodebahan','$kodebahan1','$modelid','$jumlah','$kt','$relalat1','$relalat2','$relwarna','$relukuranasli','$panjangasli','$lebarasli','$kk','$h','$user','$hargabahankain','$volume')";
 		$b=mysql_query($a);
 		echo mysql_error();
 	    echo ("<script>location.href='../home.php?menu=home'</script>");
@@ -395,6 +401,7 @@ $wkt=date('G:i:s');
 		$lebar = $_POST['lebar'];
 		$panjangasli = $_POST['panjang'];
 		$lebarasli = $_POST['lebar'];
+		$volume = $_POST['volume'];
 		$harga = 0;
 		$hasilhitung = 0;
 		$kk = $_POST['kualitas'];
@@ -699,6 +706,11 @@ $wkt=date('G:i:s');
          
 
 
+		} elseif ($jenis == 'Lain-lain') {
+
+            $hasilhitung = ($volume / 100) * $hargabahankain;
+            $modelid = 0;
+
 		} else {
         	$sqlte="SELECT * from kain, bahan WHERE kain_bahan=bahan_id and kain_id='$bahanid'";
 			$queryte=mysql_query($sqlte);
@@ -711,7 +723,7 @@ $wkt=date('G:i:s');
 
         $h = $hasilhitung * $jumlah;
 
-		$a="INSERT into pengukuran_detail(pengukuran_id,pengukuran_detail_ruang,pengukuran_detail_jenis,pengukuran_detail_bahan,pengukuran_detail_kode_bahan,pengukuran_detail_kode_bahan_1,pengukuran_detail_model,pengukuran_detail_jumlah,pengukuran_detail_kt,pengukuran_detail_alat_1,pengukuran_detail_alat_2,pengukuran_detail_alat_warna,pengukuran_detail_alat_ukuran,pengukuran_detail_tinggi,pengukuran_detail_lebar,pengukuran_detail_kualitas,pengukuran_detail_harga,pengukuran_detail_user,pengukuran_detail_harga_bahan)values('$idukur','$ruang','$jenisid','$bahanid','$kodebahan','$kodebahan1','$modelid','$jumlah','$kt','$relalat1','$relalat2','$relwarna','$relukuranasli','$panjangasli','$lebarasli','$kk','$h','$user','$hargabahankain')";
+		$a="INSERT into pengukuran_detail(pengukuran_id,pengukuran_detail_ruang,pengukuran_detail_jenis,pengukuran_detail_bahan,pengukuran_detail_kode_bahan,pengukuran_detail_kode_bahan_1,pengukuran_detail_model,pengukuran_detail_jumlah,pengukuran_detail_kt,pengukuran_detail_alat_1,pengukuran_detail_alat_2,pengukuran_detail_alat_warna,pengukuran_detail_alat_ukuran,pengukuran_detail_tinggi,pengukuran_detail_lebar,pengukuran_detail_kualitas,pengukuran_detail_harga,pengukuran_detail_user,pengukuran_detail_harga_bahan, pengukuran_detail_volume)values('$idukur','$ruang','$jenisid','$bahanid','$kodebahan','$kodebahan1','$modelid','$jumlah','$kt','$relalat1','$relalat2','$relwarna','$relukuranasli','$panjangasli','$lebarasli','$kk','$h','$user','$hargabahankain','$volume')";
 		$b=mysql_query($a);
 		echo mysql_error();
 
@@ -749,6 +761,7 @@ $wkt=date('G:i:s');
 		$lebar = $_POST['lebar'];
 		$panjangasli = $_POST['panjang'];
 		$lebarasli = $_POST['lebar'];
+		$volume = $_POST['volume'];
 		$harga = 0;
 		$hasilhitung = 0;
 		$kk = $_POST['kualitas'];
@@ -1053,6 +1066,11 @@ $wkt=date('G:i:s');
          
 
 
+		} elseif ($jenis == 'Lain-lain') {
+
+            $hasilhitung = ($volume / 100) * $hargabahankain;
+            $modelid = 0;
+
 		} else {
         	$sqlte="SELECT * from kain, bahan WHERE kain_bahan=bahan_id and kain_id='$bahanid'";
 			$queryte=mysql_query($sqlte);
@@ -1065,7 +1083,7 @@ $wkt=date('G:i:s');
 
         $h = $hasilhitung * $jumlah;
 
-		$a="UPDATE pengukuran_detail_temp set pengukuran_detail_temp_ruang='$ruang', pengukuran_detail_temp_jenis='$jenisid', pengukuran_detail_temp_bahan='$bahanid', pengukuran_detail_temp_kode_bahan='$kodebahan', pengukuran_detail_temp_kode_bahan_1='$kodebahan1', pengukuran_detail_temp_model='$modelid', pengukuran_detail_temp_jumlah='$jumlah', pengukuran_detail_temp_kt='$kt', pengukuran_detail_temp_alat_1='$relalat1', pengukuran_detail_temp_alat_2='$relalat2', pengukuran_detail_temp_alat_warna='$relwarna', pengukuran_detail_temp_alat_ukuran='$relukuranasli', pengukuran_detail_temp_tinggi='$panjangasli', pengukuran_detail_temp_lebar='$lebarasli', pengukuran_detail_temp_kualitas='$kk', pengukuran_detail_temp_harga='$h', pengukuran_detail_temp_user='$user', pengukuran_detail_temp_harga_bahan='$hargabahankain' where pengukuran_detail_temp_id='$idtemp'";
+		$a="UPDATE pengukuran_detail_temp set pengukuran_detail_temp_ruang='$ruang', pengukuran_detail_temp_jenis='$jenisid', pengukuran_detail_temp_bahan='$bahanid', pengukuran_detail_temp_kode_bahan='$kodebahan', pengukuran_detail_temp_kode_bahan_1='$kodebahan1', pengukuran_detail_temp_model='$modelid', pengukuran_detail_temp_jumlah='$jumlah', pengukuran_detail_temp_kt='$kt', pengukuran_detail_temp_alat_1='$relalat1', pengukuran_detail_temp_alat_2='$relalat2', pengukuran_detail_temp_alat_warna='$relwarna', pengukuran_detail_temp_alat_ukuran='$relukuranasli', pengukuran_detail_temp_tinggi='$panjangasli', pengukuran_detail_temp_lebar='$lebarasli', pengukuran_detail_temp_volume='$volume', pengukuran_detail_temp_kualitas='$kk', pengukuran_detail_temp_harga='$h', pengukuran_detail_temp_user='$user', pengukuran_detail_temp_harga_bahan='$hargabahankain' where pengukuran_detail_temp_id='$idtemp'";
 		$b=mysql_query($a);
 		echo mysql_error();
 	    	echo ("<script>location.href='../home.php?menu=home'</script>");
@@ -1097,6 +1115,7 @@ $wkt=date('G:i:s');
 		$lebar = $_POST['lebar'];
 		$panjangasli = $_POST['panjang'];
 		$lebarasli = $_POST['lebar'];
+		$volume = $_POST['volume'];
 		$harga = 0;
 		$hasilhitung = 0;
 		$kk = $_POST['kualitas'];
@@ -1400,6 +1419,11 @@ $wkt=date('G:i:s');
          
 
 
+		} elseif ($jenis == 'Lain-lain') {
+
+            $hasilhitung = ($volume / 100) * $hargabahankain;
+            $modelid = 0;
+
 		} else {
         	$sqlte="SELECT * from kain, bahan WHERE kain_bahan=bahan_id and kain_id='$bahanid'";
 			$queryte=mysql_query($sqlte);
@@ -1412,7 +1436,7 @@ $wkt=date('G:i:s');
 
         $h = $hasilhitung * $jumlah;
 
-		$a="UPDATE pengukuran_detail set pengukuran_detail_ruang='$ruang', pengukuran_detail_jenis='$jenisid', pengukuran_detail_bahan='$bahanid', pengukuran_detail_kode_bahan='$kodebahan', pengukuran_detail_kode_bahan_1='$kodebahan1', pengukuran_detail_model='$modelid', pengukuran_detail_jumlah='$jumlah', pengukuran_detail_kt='$kt', pengukuran_detail_alat_1='$relalat1', pengukuran_detail_alat_2='$relalat2', pengukuran_detail_alat_warna='$relwarna', pengukuran_detail_alat_ukuran='$relukuranasli', pengukuran_detail_tinggi='$panjangasli', pengukuran_detail_lebar='$lebarasli', pengukuran_detail_kualitas='$kk', pengukuran_detail_harga='$h', pengukuran_detail_harga_bahan='$hargabahankain' where pengukuran_detail_id='$idtemp'";
+		$a="UPDATE pengukuran_detail set pengukuran_detail_ruang='$ruang', pengukuran_detail_jenis='$jenisid', pengukuran_detail_bahan='$bahanid', pengukuran_detail_kode_bahan='$kodebahan', pengukuran_detail_kode_bahan_1='$kodebahan1', pengukuran_detail_model='$modelid', pengukuran_detail_jumlah='$jumlah', pengukuran_detail_kt='$kt', pengukuran_detail_alat_1='$relalat1', pengukuran_detail_alat_2='$relalat2', pengukuran_detail_alat_warna='$relwarna', pengukuran_detail_alat_ukuran='$relukuranasli', pengukuran_detail_tinggi='$panjangasli', pengukuran_detail_lebar='$lebarasli', pengukuran_detail_volume='$volume', pengukuran_detail_kualitas='$kk', pengukuran_detail_harga='$h', pengukuran_detail_harga_bahan='$hargabahankain' where pengukuran_detail_id='$idtemp'";
 		$b=mysql_query($a);
 		echo mysql_error();
 
@@ -1501,6 +1525,7 @@ $wkt=date('G:i:s');
         	$pengukuran_alat_ukuran = $data1['pengukuran_detail_temp_alat_ukuran'];
         	$pengukuran_panjang = $data1['pengukuran_detail_temp_tinggi'];
         	$pengukuran_lebar = $data1['pengukuran_detail_temp_lebar'];
+        	$pengukuran_volume = $data1['pengukuran_detail_temp_volume'];
         	$pengukuran_kualitas = $data1['pengukuran_detail_temp_kualitas'];
         	$pengukuran_harga = $data1['pengukuran_detail_temp_harga'];
         	$pengukuran_user = $data1['pengukuran_detail_temp_user'];
@@ -1511,7 +1536,7 @@ $wkt=date('G:i:s');
 				$deal_tanggal = '0000-00-00';        		
         	}
 
-        	$a="INSERT into pengukuran_detail(pengukuran_id,pengukuran_detail_ruang,pengukuran_detail_jenis,pengukuran_detail_bahan,pengukuran_detail_kode_bahan,pengukuran_detail_harga_bahan,pengukuran_detail_kode_bahan_1,pengukuran_detail_model,pengukuran_detail_jumlah,pengukuran_detail_kt,pengukuran_detail_alat_1,pengukuran_detail_alat_2,pengukuran_detail_alat_warna,pengukuran_detail_alat_ukuran,pengukuran_detail_tinggi,pengukuran_detail_lebar,pengukuran_detail_kualitas,pengukuran_detail_harga,pengukuran_detail_user)values('$pengukuran_id','$pengukuran_ruang','$pengukuran_jenis','$pengukuran_bahan','$pengukuran_kode_bahan','$pengukuran_harga_bahan','$pengukuran_kode_bahan_1','$pengukuran_model','$pengukuran_jumlah','$pengukuran_kt','$pengukuran_alat_1','$pengukuran_alat_2','$pengukuran_alat_warna','$pengukuran_alat_ukuran','$pengukuran_panjang','$pengukuran_lebar','$pengukuran_kualitas','$pengukuran_harga','$pengukuran_user')";
+        	$a="INSERT into pengukuran_detail(pengukuran_id,pengukuran_detail_ruang,pengukuran_detail_jenis,pengukuran_detail_bahan,pengukuran_detail_kode_bahan,pengukuran_detail_harga_bahan,pengukuran_detail_kode_bahan_1,pengukuran_detail_model,pengukuran_detail_jumlah,pengukuran_detail_kt,pengukuran_detail_alat_1,pengukuran_detail_alat_2,pengukuran_detail_alat_warna,pengukuran_detail_alat_ukuran,pengukuran_detail_tinggi,pengukuran_detail_lebar,pengukuran_detail_volume,pengukuran_detail_kualitas,pengukuran_detail_harga,pengukuran_detail_user)values('$pengukuran_id','$pengukuran_ruang','$pengukuran_jenis','$pengukuran_bahan','$pengukuran_kode_bahan','$pengukuran_harga_bahan','$pengukuran_kode_bahan_1','$pengukuran_model','$pengukuran_jumlah','$pengukuran_kt','$pengukuran_alat_1','$pengukuran_alat_2','$pengukuran_alat_warna','$pengukuran_alat_ukuran','$pengukuran_panjang','$pengukuran_lebar','$pengukuran_volume','$pengukuran_kualitas','$pengukuran_harga','$pengukuran_user')";
         	
         	$b=mysql_query($a);
         	echo mysql_error();
@@ -1569,6 +1594,7 @@ echo mysql_error();
 			$jumlah = $data1['pengukuran_detail_jumlah'];
 			$panjang = $data1['pengukuran_detail_tinggi'];
 			$lebar = $data1['pengukuran_detail_lebar'];
+			$volume = $data1['pengukuran_detail_volume'];
 
 		    $panjangasli = $data1['pengukuran_detail_tinggi'];
 		    $lebarasli = $data1['pengukuran_detail_lebar'];
@@ -1831,6 +1857,11 @@ echo mysql_error();
 	            $hasilhitung += $bahan_rel * $datavitrel['bahan_harga'];
 					
 
+
+			} elseif ($jenis == 'Lain-lain') {
+
+	            $hasilhitung = ($volume / 100) * $hargabahankain;
+	            $modelid = 0;
 
 			} else {
 				
