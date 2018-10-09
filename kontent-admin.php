@@ -779,8 +779,14 @@ if ($_GET['menu']=='home') {
 								<?php
 
 								} else {
+								  $diskon = $data['pengukuran_diskon'];
 								?>	
 									
+									<tr>
+										<td>Diskon</td>
+										<td>:</td>
+										<td>Rp <?php echo format_rupiah($diskon); ?></td>
+									</tr>
 									<tr>
 										<td>Dp</td>
 										<td>:</td>
@@ -1369,8 +1375,12 @@ if ($_GET['menu']=='home') {
 									if ($data["pengukuran_status"]=='Selesai Finishing') {
 										# code...
 									?>
+									    <input type="hidden" name="status" class="form-control" id="status" value="Selesai Pemasangan">
+		                      			<input type="submit" class="btn btn-success" value="Selesai Pemasangan" name="gantistatuspasang" style="margin: 0px auto;">
+		                      			<!--
 									    <input type="hidden" name="status" class="form-control" id="status" value="Proses Pemasangan">
 		                      			<input type="submit" class="btn btn-success" value="Proses Pemasangan" name="gantistatuspasang" style="margin: 0px auto;">
+										-->
 									<?php
 									} elseif ($data["pengukuran_status"]=='Proses Pemasangan'){
 										# code...
@@ -1534,8 +1544,12 @@ if ($_GET['menu']=='home') {
 									if ($data["pengukuran_status"]=='Selesai Jahit') {
 										# code...
 									?>
+									    <input type="hidden" name="status" class="form-control" id="status" value="Selesai Finishing">
+		                      			<input type="submit" class="btn btn-success" value="Selesai Steamer & Finishing" name="gantistatusjahit" style="margin: 0px auto;">
+		                      			<!--
 									    <input type="hidden" name="status" class="form-control" id="status" value="Proses Steamer">
 		                      			<input type="submit" class="btn btn-success" value="Proses Steamer" name="gantistatusjahit" style="margin: 0px auto;">
+			                      		-->
 									<?php
 									} elseif ($data["pengukuran_status"]=='Proses Steamer'){
 										# code...
@@ -1707,8 +1721,12 @@ if ($_GET['menu']=='home') {
 									if ($data["pengukuran_status"]=='Mulai Potong') {
 										# code...
 									?>
+									    <input type="hidden" name="status" class="form-control" id="status" value="Selesai Jahit">
+		                      			<input type="submit" class="btn btn-success" value="Selesai Potong & Jahit" name="gantistatuspotong" style="margin: 0px auto;">
+										<!--
 									    <input type="hidden" name="status" class="form-control" id="status" value="Proses Potong">
 		                      			<input type="submit" class="btn btn-success" value="Proses Pemotongan" name="gantistatuspotong" style="margin: 0px auto;">
+		                      		-->
 									<?php
 									} elseif ($data["pengukuran_status"]=='Proses Potong'){
 										# code...
@@ -3347,6 +3365,7 @@ if ($_GET['menu']=='home') {
 	              	<?php 
 	              	if ($_GET['tanggal']!='') {
 	              		# code...
+	              		/*
 						$text_line = explode("-",$_GET['tanggal']);
 						$bulan = $text_line[0];
 						$tahun = $text_line[1];
@@ -3363,7 +3382,9 @@ if ($_GET['menu']=='home') {
 						}
 	              		$tgl1=$tahun1.'-'.$bln1."-01";
 	              		$tgl2=$tahun.'-'.$bulan.'-31';
+	              		*/
 	              		$t = $_GET['tanggal'];
+
               		?>
               		<table id="example2" class="table table-bordered table-striped">
 		                <thead>
@@ -3382,11 +3403,11 @@ if ($_GET['menu']=='home') {
 		                	$text_line = explode(":",$_GET['tanggal']);
 							$tgl1=$text_line[0];
 							$tgl2=$text_line[1];
-		                	$query=mysql_query("SELECT pengukuran_bulan, sum(pengukuran_total_harga) as total, sum(pengukuran_diskon) as diskon from pengukuran where pengukuran_tanggal_deal between '%$tgl1%' and '%$tgl2%' group by pengukuran_bulan order by pengukuran_bulan ASC");
+		                	$query=mysql_query("SELECT laporan_omset_bulan, sum(laporan_omset_jumlah) as total from laporan_omset where laporan_omset_bulan between '$tgl1' and '$tgl2' group by laporan_omset_bulan order by laporan_omset_bulan ASC");
 								while ($datatea=mysql_fetch_array($query)) {
 
-								$t = $datatea["pengukuran_bulan"];
-								$bersih = $datatea["total"] - $datatea["diskon"];
+								$t = $datatea["laporan_omset_bulan"];
+								$bersih = $datatea["total"];
 							
 							?>
 								<tr>
@@ -3410,6 +3431,7 @@ if ($_GET['menu']=='home') {
 	              	}
 	              	
 	              	?>
+	              	<a href="modul/laporan/export-laporan-penjualan.php?&tanggal=<?php echo $_GET['tanggal']; ?>" class="btn btn-success" target="_blank">Download Laporan</a>
 		            </div>
 		            <!-- /.box-body -->
 				</div>
@@ -3459,45 +3481,32 @@ if ($_GET['menu']=='home') {
 		                <tr>
 		                  <th>Tanggal</th>
 		                  <th>Nama Pelanggan</th>
-		                  <th>Keterangan</th>
 		                  <th style="text-align: right;">Jumlah</th>
 		                </tr>
 		                </thead>
 		                <tbody>
 		                <?php
 			                $jml=0;
-		                	$query=mysql_query("SELECT * from pengukuran, users_lain where pengukuran_pelanggan=id and pengukuran_tanggal_deal LIKE '%$tgl%'");
+		                	$query=mysql_query("SELECT * from laporan_omset, pengukuran, users_lain where laporan_omset_bulan='$tgl' and laporan_omset_pengukuran_id=pengukuran_id and id=pengukuran_pelanggan ");
 								while ($datatea=mysql_fetch_array($query)) {
-								$jml+=$datatea["pengukuran_dp_awal"];
+								$jml+=$datatea["laporan_omset_jumlah"];
 							?>
 								<tr>
-									<td><?php echo $datatea['pengukuran_tanggal_deal']; ?></td>
+									<td><?php echo $datatea['laporan_omset_tanggal']; ?></td>
 									<td><?php echo $datatea["name"]; ?></td>
-									<td>DP</td>
-									<td style="text-align: right;">Rp. <?php echo format_rupiah($datatea["pengukuran_dp_awal"]); ?></td>
+									<td style="text-align: right;">Rp. <?php echo format_rupiah($datatea["laporan_omset_jumlah"]); ?></td>
 								</tr>
 							<?php
 							}
 
-							$query=mysql_query("SELECT * from pengukuran, users_lain where pengukuran_pelanggan=id and pengukuran_tanggal_lunas LIKE '%$tgl%'");
-								while ($datatea=mysql_fetch_array($query)) {
-								$jml+=$datatea["pengukuran_pelunasan"];
-							?>
-								<tr>
-									<td><?php echo $datatea['pengukuran_tanggal_lunas']; ?></td>
-									<td><?php echo $datatea["name"]; ?></td>
-									<td>Pelunasan</td>
-									<td style="text-align: right;">Rp. <?php echo format_rupiah($datatea["pengukuran_pelunasan"]); ?></td>
-								</tr>
-							<?php
-							}
 		                ?>
 		            		<tr>
-		            			<th colspan="3" style="border-top: 2px solid #000;">Total</th>
+		            			<th colspan="2" style="border-top: 2px solid #000;">Total</th>
 		            			<th style="text-align: right;border-top: 2px solid #000;">Rp. <?php echo format_rupiah($jml); ?></th>
 		            		</tr>
 		                </tbody>
 		            </table>
+	              	<a href="modul/laporan/export-laporan-detail.php?&tanggal=<?php echo $_GET['tanggal']; ?>" class="btn btn-success" target="_blank">Download Laporan</a>
               		</div>
 		            <!-- /.box-body -->
 				</div>

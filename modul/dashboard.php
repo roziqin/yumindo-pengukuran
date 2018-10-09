@@ -325,7 +325,7 @@
 						<td><?php echo $data1["telepon"]; ?></td>
 						<td><?php echo $data["name"]; ?></td>
 						<td><?php echo $data["pengukuran_status"]; ?></td>
-						<td>Rp <?php echo format_rupiah($data["pengukuran_total_harga"]-$data["pengukuran_dp"]); ?></td>
+						<td>Rp <?php echo format_rupiah($data["pengukuran_total_harga"]-$data["pengukuran_dp"]-$data['pengukuran_diskon']); ?></td>
 						<td>
 							<a href="?menu=detail&id=<?php echo $data["pengukuran_id"]; ?>" class="btn btn-primary">Detail</a>
 						</td>

@@ -23,7 +23,7 @@ if ($_GET['menu']=='transaksi') {
 		$dataukur=mysql_fetch_array($queryukur);
 		$total = $dataukur["jumlah"];
 
-		mysql_query("UPDATE pengukuran SET pengukuran_total_harga='$total'");
+		mysql_query("UPDATE pengukuran SET pengukuran_total_harga='$total' WHERE pengukuran_id='$idukur'");
 		echo "<script>location.href='../admin.php?menu=detail&id=$idukur'</script>";
 	
 	}

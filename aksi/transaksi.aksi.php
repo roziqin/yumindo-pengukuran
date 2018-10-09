@@ -2119,6 +2119,7 @@ echo mysql_error();
 		}
 
 		$b="INSERT into laporan_omset(laporan_omset_tanggal,laporan_omset_bulan,laporan_omset_pengukuran_id,laporan_omset_jumlah)values('$tgl','$bulan','$id','$bayar')";
+			mysql_query($b);
 		
 		
 		
