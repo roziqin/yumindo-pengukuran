@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "yumindo"
+AuthUserFile "/home/yumindon/.htpasswds/pengukuran.yumindo.net/passwd"
+require valid-user
